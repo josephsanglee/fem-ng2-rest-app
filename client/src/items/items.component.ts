@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {ItemsService, Item} from './items.service';
 import {ItemsList} from './items-list.component';
 import {ItemDetail} from './item-detail.component';
@@ -7,8 +8,7 @@ import {Widgets} from '../widgets/widgets';
 @Component({
   selector: 'items',
   template: `
-  <widgets></widgets>
-  <hr>
+  <button (click)="goToWidgets()"> Widgets </button>
   <div class="mdl-grid items">
     <div class="mdl-cell mdl-cell--6-col">
       <items-list [items]="items"
@@ -36,13 +36,17 @@ export class Items implements OnInit {
   items: Array<Item>;
   selectedItem: Item;
 
-  constructor(private itemsService: ItemsService) {}
+  constructor(private itemsService: ItemsService, private _router: Router) {}
 
   ngOnInit() {
     this.itemsService.loadItems()
       .then(items => {
         this.items = items;
       });
+  }
+
+  goToWidgets(id: string='1') {
+    this._router.navigate(['widgets', {id}]);
   }
 
   resetItem() {

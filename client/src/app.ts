@@ -8,6 +8,7 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
 })
 export class App {
   links = {
-    items: ['/items']
+    items: ['/items'],
+    widgets: ['/widgets', {id: 1}]
   }
 }
