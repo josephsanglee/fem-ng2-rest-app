@@ -1,12 +1,17 @@
 import {Injectable} from '@angular/core';
 
+export interface Widget {
+  id: number;
+  name: string;
+  cost: number;
+}
+
 @Injectable()
 export class WidgetsService {
-  widgets = [1,2,3,4,5].map(i => {
-    return {
-      id: i,
-      name: `Widget${i}`,
-      description: `I am widget ${i}`,
-    };
-  });
+  widgets = [
+    {id: 1, name: 'Widget 01', cost: 100},
+    {id: 2, name: 'Widget 02', cost: 200},
+    {id: 3, name: 'Widget 03', cost: 300},
+    {id: 4, name: 'Widget 04', cost: 400},
+  ];
 }

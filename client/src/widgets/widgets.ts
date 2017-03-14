@@ -1,27 +1,36 @@
 import {Component} from '@angular/core';
 import {WidgetsService} from './widgets.service';
 import {ActivatedRoute, Params} from '@angular/router';
-
+import {WidgetsList} from './widgets-list.component';
+import {WidgetDetail} from './widgets-details.component';
 @Component({
   selector: 'widgets',
   template: `
-    <h1>Practice creating components</h1>
-    <div class="active-widget">
-      {{activeWidget.name}}
-      {{activeWidget.description}}
+    <div class="mdl-grid items">
+      <div class="mdl-cell mdl-cell--6-col">
+        <widgets-list [widgets]="widgets"
+        (selected)="selectWidget($event)"></widgets-list>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <widget-detail [selectedWidget]="selectedWidget"></widget-detail>
+      </div>
     </div>
-    <pre>{{widgets | json}}</pre>
   `,
+  directives: [WidgetsList, WidgetDetail],
   providers: [WidgetsService],
 })
 export class Widgets {
   widgets = [];
-  activeWidget = {};
+  selectedWidget = {};
+
   constructor(_widgetsService: WidgetsService, private route: ActivatedRoute) {
-    
     this.widgets = _widgetsService.widgets;
-    this.route.params.subscribe((params: Params) => {
-      this.activeWidget = this.widgets.find(widget => widget.id === parseInt(params['id']));
-    });
+    // this.route.params.subscribe((params: Params) => {
+    //   this.activeWidget = this.widgets.find(widget => widget.id === parseInt(params['id']));
+    // });
+  }
+
+  selectWidget(widget) {
+    this.selectedWidget = widget;
   }
 }
